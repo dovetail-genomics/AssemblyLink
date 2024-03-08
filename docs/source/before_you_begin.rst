@@ -78,7 +78,7 @@ For this tutorial you will need:
 * **fastq files** R1 and R2, either fastq or fastq.gz are acceptable
 * **reference in a fasta file format**, e.g. hg38
 
-If you don't already have your own input files or want to run a test on a small data set, you can download sample fastq files from the :ref:`TopoLink Data Sets section<DATASETS>`. The 2M data set is suitable for a quick testing of the instruction in this tutorial. 
+If you don't already have your own input files or want to run a test on a small data set, you can download sample fastq files from the :ref:`AssemblyLink Data Sets section<DATASETS>`. The 2M data set is suitable for a quick testing of the instruction in this tutorial. 
 
 .. code-block:: console
 

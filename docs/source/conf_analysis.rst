@@ -24,7 +24,7 @@ A/B Compartments
 
 .. code-block:: console
 
-   	fanc compartments -f -v TopoLink_eigen_64kb.bed -d TopoLink_AB_64kb.bed -g hg38.fa TopoLink.mcool@64000 TopoLink_64kb.ab
+   	fanc compartments -f -v LinkPrep_eigen_64kb.bed -d LinkPrep_AB_64kb.bed -g hg38.fa LinkPrep.mcool@64000 LinkPrep_64kb.ab
 
 
 **Example Output(s)**
@@ -45,8 +45,8 @@ Topologically Associated Domains
 
 .. code-block:: console
 
-   java -jar -Xmx48000m  -Djava.awt.headless=true -jar juicer_tools.jar arrowhead --threads 16 -k KR -m 2000 -r 10000 TopoLink.hic TAD_calls
-   java -jar -Xmx48000m  -Djava.awt.headless=true -jar juicer_tools.jar arrowhead --threads 16 -k KR -m 2000 -r 5000 TopoLink.hic TAD_calls
+   java -jar -Xmx48000m  -Djava.awt.headless=true -jar juicer_tools.jar arrowhead --threads 16 -k KR -m 2000 -r 10000 LinkPrep.hic TAD_calls
+   java -jar -Xmx48000m  -Djava.awt.headless=true -jar juicer_tools.jar arrowhead --threads 16 -k KR -m 2000 -r 5000 LinkPrep.hic TAD_calls
 
 
 **Example Output(s)**
@@ -66,8 +66,8 @@ Chromatin Loops
 
 .. code-block:: console
 
-   mustache -p 48 -f TopoLink.mcool -r 16000 -o TopoLink_16000kb_loops.tsv
-   mustache -p 48 -f TopoLink.mcool -r 4000 -o TopoLink_4000kb_loops.tsv
+   mustache -p 48 -f LinkPrep.mcool -r 16000 -o LinkPrep_16000kb_loops.tsv
+   mustache -p 48 -f LinkPrep.mcool -r 4000 -o LinkPrep_4000kb_loops.tsv
 
 **Example Output(s)**
 

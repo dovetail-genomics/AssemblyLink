@@ -4,7 +4,7 @@
 Alignment and Proximity-Ligation QC
 ===================================
 
-To perform QC analysis on your TopoLink library, first downsample its sequencing data to one million (1M) read pairs using SeqTK:
+To perform QC analysis on your AssemblyLink library, first downsample its sequencing data to one million (1M) read pairs using SeqTK:
 
 **Command:**
 
@@ -17,14 +17,14 @@ To perform QC analysis on your TopoLink library, first downsample its sequencing
 
 .. code-block:: console
 
-   seqtk sample -s100 TopoLink_R1.fastq 1000000 > TopoLink_1M_R1.fastq
-   seqtk sample -s100 TopoLink_R2.fastq 1000000 > TopoLink_1M_R2.fastq
+   seqtk sample -s100 LinkPrep_R1.fastq 1000000 > LinkPrep_1M_R1.fastq
+   seqtk sample -s100 LinkPrep_R2.fastq 1000000 > LinkPrep_1M_R2.fastq
 
 Next, follow the procedures described on :ref:`From fastq to final valid pairs bam file<FTB>` up to and including the step titled :ref:`Removing PCR duplicates<DUPs>`, using the downsampled datasets generated above as input. 
 
 In the step :ref:`Removing PCR duplicates<DUPs>` you used the flag `--output-stats` to generate a stats file in addition to the pairsam output (e.g. --output-stats stats.txt).  
 This pairtools stats file provides an extensive output of pairs statistics calculated by pairtools, including total reads, total mapped, total dups, total pairs for each pair of chromosomes, etc., 
-which are useful in understanding the characteristics of your TopoLink library.
+which are useful in understanding the characteristics of your AssemblyLink library.
 
 At this stage of QC analysis, the following two values from the pairtools stats file are required: "No-Dup Read Pairs" (`total_no_dups`) and "No-Dup Cis Read Pairs >= 1kb" (`cis_1kb+`). 
 These values can be extracted as follows:
@@ -39,10 +39,10 @@ These values can be extracted as follows:
 
 .. code-block:: console
 
-   grep -wE "total_nodups|cis_1kb\+" TopoLink_1M_pairtools.stats
+   grep -wE "total_nodups|cis_1kb\+" LinkPrep_1M_pairtools.stats
 
 
-Please use the values outputted by the above command with the criteria listed in the following table to assess the quality of your TopoLink library:
+Please use the values outputted by the above command with the criteria listed in the following table to assess the quality of your AssemblyLink library:
 
 +--------------------------------+-----------------------------+
 | Metric                         | Recommended Passing Values  |
@@ -51,6 +51,11 @@ Please use the values outputted by the above command with the criteria listed in
 +--------------------------------+-----------------------------+
 | No-Dup Cis Read Pairs >= 1kb   | >250,000 pairs (>25% of 1M) |
 +--------------------------------+-----------------------------+
+
+Note: We have observed duplicate rates vary between libraries sequenced on different platforms. For example, libraries sequenced on the
+NextSeq and NovaSeq platforms appear to have higher duplicate rates that other platforms. We recommended performing shallow sequencing QC 
+on a MiniSeq or MiSeq system to determine final library complexity most accurately.  
+
 
 Complexity
 ----------

@@ -24,7 +24,7 @@ Additional Dependencies
 .. code-block:: console
 
    wget https://s3.amazonaws.com/hicfiles.tc4ga.com/public/juicer/juicer_tools_1.22.01.jar
-   mv juicer_tools_1.22.01.jar ./TopoLink/juicertools.jar
+   mv juicer_tools_1.22.01.jar ./AssemblyLink/juicertools.jar
 
 - Java - If not already installed, you can install Java as follows:
 
@@ -70,7 +70,7 @@ The :ref:`.pairs<GPB>` file that you generated in the :ref:`From fastq to final 
 
 .. code-block:: console
 
-   java -Xmx48000m  -Djava.awt.headless=true -jar ./TopoLink/juicertools.jar pre --threads 16 mapped.pairs contact_map.hic hg38.genome
+   java -Xmx48000m  -Djava.awt.headless=true -jar ./AssemblyLink/juicertools.jar pre --threads 16 mapped.pairs contact_map.hic hg38.genome
 
 
 .. admonition:: Tip no.2

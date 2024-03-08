@@ -13,7 +13,7 @@ From fastq to final valid pairs bam file
    
    .. code-block:: console
    
-      bwa mem -5SP -T0 -t<cores> <ref.fa> <TopoLink.R1.fastq.gz> <TopoLink.R2.fastq.gz>| \ 
+      bwa mem -5SP -T0 -t<cores> <ref.fa> <LinkPrep.R1.fastq.gz> <LinkPrep.R2.fastq.gz>| \ 
       pairtools parse --min-mapq 40 --walks-policy 5unique \ 
       --max-inter-align-gap 30 --nproc-in <cores> --nproc-out <cores> --chroms-path <ref.genome> | \ 
       pairtools sort --tmpdir=<full_path/to/tmpdir> --nproc <cores>|pairtools dedup --nproc-in <cores> \ 
@@ -25,7 +25,7 @@ From fastq to final valid pairs bam file
    
    .. code-block:: console
    
-      bwa mem -5SP -T0 -t16 hg38.fasta TopoLink_2M_R1.fastq TopoLink_2M_R2.fastq| pairtools parse --min-mapq 40 --walks-policy 5unique --max-inter-align-gap 30 --nproc-in 8 --nproc-out 8 --chroms-path hg38.genome | pairtools sort --tmpdir=/home/ubuntu/ebs/temp/ --nproc 16|pairtools dedup --nproc-in 8 --nproc-out 8 --mark-dups --output-stats stats.txt|pairtools split --nproc-in 8 --nproc-out 8 --output-pairs mapped.pairs --output-sam -|samtools view -bS -@16 | samtools sort -@16 -o mapped.PT.bam;samtools index mapped.PT.bam
+      bwa mem -5SP -T0 -t16 hg38.fasta LinkPrep_2M_R1.fastq LinkPrep_2M_R2.fastq| pairtools parse --min-mapq 40 --walks-policy 5unique --max-inter-align-gap 30 --nproc-in 8 --nproc-out 8 --chroms-path hg38.genome | pairtools sort --tmpdir=/home/ubuntu/ebs/temp/ --nproc 16|pairtools dedup --nproc-in 8 --nproc-out 8 --mark-dups --output-stats stats.txt|pairtools split --nproc-in 8 --nproc-out 8 --output-pairs mapped.pairs --output-sam -|samtools view -bS -@16 | samtools sort -@16 -o mapped.PT.bam;samtools index mapped.PT.bam
 
 
 |clock| The full command above, with 2M read pairs on an Ubuntu 18.04 machine with 16 CPUs and 64GiB was completed in less than 5 minutes. 
@@ -42,7 +42,7 @@ fastq to final valid pairs bam file - step by step
 Alignment 
 +++++++++
 
-Now that you have a genome file, index file and a reference fasta file you are all set to align your TopoLink library to the reference. Please note the specific settings that are needed to map mates independently and for optimal results with our proximity library reads.
+Now that you have a genome file, index file and a reference fasta file you are all set to align your AssemblyLink library to the reference. Please note the specific settings that are needed to map mates independently and for optimal results with our proximity library reads.
 
 
 .. csv-table::
@@ -58,14 +58,14 @@ Bwa mem will output a sam file that you can either pipe or save to a path using 
 
 .. code-block:: console
 
-   bwa mem -5SP -T0 -t<threads> <ref.fasta> <TopoLink_R1.fastq> <TopoLink_R2.fastq> -o <aligned.sam> 
+   bwa mem -5SP -T0 -t<threads> <ref.fasta> <LinkPrep_R1.fastq> <LinkPrep_R2.fastq> -o <aligned.sam> 
 
 
 **Example (one pair of fastq files):**
 
 .. code-block:: console
 
-   bwa mem -5SP -T0 -t16 hg38.fasta TopoLink_2M_R1.fastq TopoLink_2M_R2.fastq -o aligned.sam
+   bwa mem -5SP -T0 -t16 hg38.fasta LinkPrep_2M_R1.fastq LinkPrep_2M_R2.fastq -o aligned.sam
 
 
 **Example (multiple pairs of fastq files):**
@@ -79,7 +79,7 @@ Bwa mem will output a sam file that you can either pipe or save to a path using 
 Recording valid ligation events
 +++++++++++++++++++++++++++++++
 
-We use the ``parse`` module of the ``pairtools`` pipeline to find ligation junctions in TopoLink (and other proximity ligation) libraries. When a ligation event is identified in the alignment file the pairtools pipeline will record the outer-most (5’) aligned base pair and the strand of each one of the paired reads into ``.pairsam`` file (pairsam format captures SAM entries together with the Hi-C pair information). In addition, it will also asign a pair type for each event. e.g. if both reads aligned uniquely to only one region in the genome, the type UU (Unique-Unique) will be assigned to the pair. The following steps are necessary to identify the high quality valid pairs over low quality events (e.g. due to low mapping quality):
+We use the ``parse`` module of the ``pairtools`` pipeline to find ligation junctions in AssemblyLink (and other proximity ligation) libraries. When a ligation event is identified in the alignment file the pairtools pipeline will record the outer-most (5’) aligned base pair and the strand of each one of the paired reads into ``.pairsam`` file (pairsam format captures SAM entries together with the Hi-C pair information). In addition, it will also asign a pair type for each event. e.g. if both reads aligned uniquely to only one region in the genome, the type UU (Unique-Unique) will be assigned to the pair. The following steps are necessary to identify the high quality valid pairs over low quality events (e.g. due to low mapping quality):
 
 
 ``pairtools parse`` options:
@@ -179,7 +179,7 @@ Removing PCR duplicates
 Generate .pairs and bam files
 +++++++++++++++++++++++++++++
 
-The ``pairtools split`` command is used to split the final ``.pairsam`` into two files: ``.sam`` (or ``.bam``) and ``.pairs`` (``.pairsam`` has two extra columns containing the alignments from which the TopoLink pair was extracted, these two columns are not included in ``.pairs`` files)
+The ``pairtools split`` command is used to split the final ``.pairsam`` into two files: ``.sam`` (or ``.bam``) and ``.pairs`` (``.pairsam`` has two extra columns containing the alignments from which the AssemblyLink pair was extracted, these two columns are not included in ``.pairs`` files)
 
 ``pairtools split`` options:
 
