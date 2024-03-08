@@ -19,8 +19,8 @@
 
 # -- Project information -----------------------------------------------------
 
-project = u'TopoLink'
-copyright = u'2021, Dovetail'
+project = u'AssemblyLink'
+copyright = u'2024, Dovetail'
 author = u'Dovetail'
 
 # The short X.Y version
@@ -102,7 +102,7 @@ html_static_path = ['_static']
 # -- Options for HTMLHelp output ---------------------------------------------
 
 # Output file base name for HTML help builder.
-htmlhelp_basename = 'TopoLinkdoc'
+htmlhelp_basename = 'AssemblyLinkdoc'
 
 
 # -- Options for LaTeX output ------------------------------------------------
@@ -139,7 +139,7 @@ latex_documents = [
 # One entry per manual page. List of tuples
 # (source start file, name, description, authors, manual section).
 man_pages = [
-    (master_doc, 'TopoLink', u'TopoLink Documentation',
+    (master_doc, 'AssemblyLink', u'AssemblyLink Documentation',
      [author], 1)
 ]
 
@@ -150,8 +150,8 @@ man_pages = [
 # (source start file, target name, title, author,
 #  dir menu entry, description, category)
 texinfo_documents = [
-    (master_doc, 'TopoLink', u'TopoLink Documentation',
-     author, 'TopoLink', 'One line description of project.',
+    (master_doc, 'AssemblyLink', u'AssemblyLink Documentation',
+     author, 'AssemblyLink', 'One line description of project.',
      'Miscellaneous'),
 ]
 
