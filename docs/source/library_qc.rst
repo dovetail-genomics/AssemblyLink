@@ -4,6 +4,7 @@
 Alignment and Proximity-Ligation QC
 ===================================
 
+This workflow enables you to QC your library and compare between samples. If you have prepared a library with a different chemistry, this below workflow is sufficient. 
 To perform QC analysis on your AssemblyLink library, first downsample its sequencing data to one million (1M) read pairs using SeqTK:
 
 **Command:**
@@ -26,31 +27,35 @@ In the step :ref:`Removing PCR duplicates<DUPs>` you used the flag `--output-sta
 This pairtools stats file provides an extensive output of pairs statistics calculated by pairtools, including total reads, total mapped, total dups, total pairs for each pair of chromosomes, etc., 
 which are useful in understanding the characteristics of your AssemblyLink library.
 
-At this stage of QC analysis, the following two values from the pairtools stats file are required: "No-Dup Read Pairs" (`total_no_dups`) and "No-Dup Cis Read Pairs >= 1kb" (`cis_1kb+`). 
-These values can be extracted as follows:
+We have provided a script (`get_qc.py`) that extracts values from the pairtools stats file that we find helpful in assessing the quality of an AssemblyLink sequencing library:
 
 **Command:**
 
 .. code-block:: console
 
-   grep -wE "total_nodups|cis_1kb\+" <pairtools stats file>
+   python3 ./AssemblyLink/get_qc.py -p <pairtools stats>
+
 
 **Example:**
 
 .. code-block:: console
 
-   grep -wE "total_nodups|cis_1kb\+" LinkPrep_1M_pairtools.stats
+   python3 ./AssemblyLink/get_qc.py -p LinkPrep_1M_pairtools.stats
 
+**Example output**::
 
-Please use the values outputted by the above command with the criteria listed in the following table to assess the quality of your AssemblyLink library:
+   Total Read Pairs                              1,000,000  100%
+   Unmapped Read Pairs                           38,923     3.89%
+   Mapped Read Pairs                             835,985    83.6%
+   PCR Dup Read Pairs                            1,011      0.1%
+   No-Dup Read Pairs                             834,974    83.5%
+   No-Dup Cis Read Pairs                         698,506    69.85%
+   No-Dup Trans Read Pairs                       136,468    13.65%
+   No-Dup Valid Read Pairs (cis >= 1kb + trans)  612,394    61.24%
+   No-Dup Cis Read Pairs < 1kb                   222,580    22.26%
+   No-Dup Cis Read Pairs >= 1kb                  475,926    47.59%
+   No-Dup Cis Read Pairs >= 10kb                 362,853    36.29%
 
-+--------------------------------+-----------------------------+
-| Metric                         | Recommended Passing Values  |
-+================================+=============================+
-| No-Dup Read Pairs              | >500,000 pairs (>50% of 1M) |
-+--------------------------------+-----------------------------+
-| No-Dup Cis Read Pairs >= 1kb   | >250,000 pairs (>25% of 1M) |
-+--------------------------------+-----------------------------+
 
 Note: We have observed duplicate rates vary between libraries sequenced on different platforms. For example, libraries sequenced on the
 NextSeq and NovaSeq platforms appear to have higher duplicate rates that other platforms. We recommended performing shallow sequencing QC 
@@ -60,7 +65,7 @@ on a MiniSeq or MiSeq system to determine final library complexity most accurate
 Complexity
 ----------
 
-If you performed a shallow sequencing experiment (e.g. 10M reads) and are running a QC analysis to decide which library to use for deep sequencing (DS), it is recommended to evaluate the complexity of the library before moving to DS. 
+To best estimate library complexity use full shallow sequenced data (not subsampled, as above) and `preseq` prior to moving to deep sequencing. 
 
 The `lc_extrap` utility of the `preseq` package aims to predict the complexity of sequencing libraries. 
 
@@ -92,7 +97,9 @@ Please note that the input bam file should be a version prior to dups removal.
    preseq lc_extrap -bam -pe -extrap 2.1e9 -step 1e8 -seg_len 1000000000 -output out.preseq mapped.PT.bam
 
 
-In this example, the output file (`out.preseq`) details the extrapolated complexity curve of your library, with the total number of read pairs in the first column and the number of expected distinct read pairs in the second column. For a typical experiment (human sample) check the expected complexity at 400M read pairs (to show the contents of the file, type `cat out.preseq`). For a sequencing library at 400M read pairs, the expected distinct read pairs should be at least 125 million.
+In this example, the output file (`out.preseq`) details the extrapolated complexity curve of your library, with the total number of read pairs in the first column 
+and the number of expected distinct read pairs in the second column. For a typical experiment (human sample) check the expected complexity at 300M read pairs 
+(to show the contents of the file, type `cat out.preseq`). We expect a minimum of 125M distinct read pairs for every 300M read pairs sequenced.
 
 .. image:: /images/3.Complexity.png
 
@@ -101,22 +108,4 @@ In this example, the output file (`out.preseq`) details the extrapolated complex
 Sequencing Recommendations
 --------------------------
 
-AssemblyLink was designed to support looping calling with one sample. This requires generating four libraries from a single proximity-ligation reaction. This does not mean you need to sequence all four libraries. The amount of sequencing and the number of libraries you need to to sequence is dependent on the feature you are trying to detect and the resolution (or bin size) at which you wish to call features. The table below outlines the number of libraries, total sequencing depth in read pairs, and how many read pairs are needed per library, and finally the minimal amount of no-dup read pairs summed across the libraries for each feature at given resolutions:
-
-+------------------+--------------+-------------------+--------------------+--------------------------------+--------------------------------------------------------+
-| Feature          | Resolution   | Total # libraries | Total # read pairs | Total # read pairs per library | Minimal # of no-dup read pairs summed across libraries |
-+==================+==============+===================+====================+================================+========================================================+
-| A/B Compartments | 50-100 kb    | 1                 | 200 Million        | 200 Million                    | >80 Million                                            |
-+------------------+--------------+-------------------+--------------------+--------------------------------+--------------------------------------------------------+
-| TADS             | 25 kb        | 2                 | 400 Million        | 200 Million                    | >150 Million                                           |
-+------------------+--------------+-------------------+--------------------+--------------------------------+--------------------------------------------------------+
-|                  | 10 kb        | 2                 | 600 Million        | 300 Million                    | >300 Million                                           |
-+------------------+--------------+-------------------+--------------------+--------------------------------+--------------------------------------------------------+
-|                  | 5 kb         | 4                 | 800 Million        | 200 Million                    | >400 Million                                           |
-+------------------+--------------+-------------------+--------------------+--------------------------------+--------------------------------------------------------+
-| Loops            | 10 kb        | 4                 | 800 Million        | 200 Million                    | >400 Million                                           |
-+------------------+--------------+-------------------+--------------------+--------------------------------+--------------------------------------------------------+
-|                  | 5 kb         | 4                 | 1200 Million       | 300 Million                    | >500 Million                                           |
-+------------------+--------------+-------------------+--------------------+--------------------------------+--------------------------------------------------------+
-
-To generate the most complete matrix you can from a single 500 thousand cell input, you need sequence 4 libraries to a total of 1200 million read pairs (300 million per library).
+Assuming your library complexity QC is as expected, each AssemblyLink library can be sequenced up to 300M read pairs (2 x 150bp).  
