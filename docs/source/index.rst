@@ -16,17 +16,10 @@ Welcome to AssemblyLink documentation
 
 Overview
 ========
-- Cantata Bio™ AssemblyLink® Loop Calling Kit is designed for the rapid generation of genomic interaction data, or Hi-C-like data. This workflow enables researchers to go from sample prep to a sequencing ready library in under one day.
+- Dovetail® AssemblyLink™ Kit is designed for the rapid generation of genomic interaction data, or Hi-C-like data. This workflow enables researchers to go from sample prep to a sequencing ready library in under one day.
 
 .. image:: /images/LinkPrep_intro2.png
    :alt: AssemblyLink_Intro2
-
-- Key benefits of AssemblyLink:
-
-  - Compressed overall workflow to single day compared to 2-5 day workflow of other Hi-C approaches
-  - Reduced the sample input to 500 thousand cells from the 2-10 million cells required for Hi-C
-  - Improved mapping rate and even genomic coverage result in more complete contact matrices
-  - More complete matrices lead to a higher rate of discovery in conformation feature calling, e.g. TADs and Loops
   
 - This guide will take you step by step on how to process and QC your AssemblyLink library, how to interpret the QC results, how to generate contact maps, and how to perform chromatin conformation feature calling. If you don’t yet have a sequencing AssemblyLink library and you want to get familiar with the data, you can download AssemblyLink sequence libraries from our publicly available data sets. 
 
@@ -34,6 +27,117 @@ Overview
 
 - If this is your first time following this tutorial, please check the :ref:`Before you begin page <BYB>` first.
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
 
 .. toctree::
    :maxdepth: 2
