@@ -10,16 +10,9 @@ Welcome to AssemblyLink documentation
 =====================================
 
 
-.. image:: /images/LinkPrep_intro1.png
-   :alt: AssemblyLink_Intro1
-
-
 Overview
 ========
 - Dovetail® AssemblyLink™ Kit is designed for the rapid generation of genomic interaction data, or Hi-C-like data. This workflow enables researchers to go from sample prep to a sequencing ready library in under one day.
-
-.. image:: /images/LinkPrep_intro2.png
-   :alt: AssemblyLink_Intro2
   
 - This guide will take you step by step on how to process and QC your AssemblyLink library, how to interpret the QC results, how to generate contact maps, and how to perform chromatin conformation feature calling. If you don’t yet have a sequencing AssemblyLink library and you want to get familiar with the data, you can download AssemblyLink sequence libraries from our publicly available data sets. 
 
