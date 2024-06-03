@@ -145,8 +145,6 @@ Overview
    library_qc
 
    contact_map
-
-   conf_analysis
    
    data_sets
 
